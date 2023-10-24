@@ -1,11 +1,11 @@
 package cmd
 
 import (
+	"github.com/dlclark/regexp2"
 	"github.com/spf13/cobra"
 	"os"
 	"path/filepath"
 	"rul/utils/gout"
-	"strings"
 )
 
 var renameCmd = &cobra.Command{
@@ -15,12 +15,21 @@ var renameCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		dir, _ := cmd.Flags().GetString("dir")
 		str, _ := cmd.Flags().GetString("str")
+
+		// 创建正则表达式对象
+		re, err := regexp2.Compile(str, regexp2.None)
+		if err != nil {
+			gout.RedSPrintf("正则表达式错误: %s\n", err.Error())
+			return
+		}
+
 		filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
 			if err != nil {
 				gout.RedSPrintf("出现错误%s\n", err.Error())
 				return err
 			}
-			newName := strings.ReplaceAll(info.Name(), str, "")
+			// 使用正则表达式替换字符串
+			newName, _ := re.Replace(info.Name(), "", -1, -1)
 			if newName != info.Name() {
 				os.Rename(path, filepath.Join(filepath.Dir(path), newName))
 			}

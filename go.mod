@@ -3,6 +3,7 @@ module rul
 go 1.20
 
 require (
+	github.com/dlclark/regexp2 v1.10.0
 	github.com/fatih/color v1.15.0
 	github.com/spf13/cobra v1.7.0
 )

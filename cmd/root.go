@@ -11,8 +11,8 @@ var rootCmd = &cobra.Command{
 	Short: "rul工具",
 	Long:  `常用命令行工具`,
 	Run: func(cmd *cobra.Command, args []string) {
-		gout.GreenSPrintf("\t1、rename 用于对指定dir目录所有文件去除固定字符串\t%s", `.\rul.exe rename -d ".\a.b" -s "[a b]"`)
-		gout.GreenPrintln("\t2、create 用于对指定dir目录创建带有统一前缀的目录")
+		gout.GreenSPrintf("\t1、rename 用于对指定dir目录所有文件去除固定字符串\t%s", `.\rul.exe rename -d ".\a.b" -s "as.*bn"`)
+		gout.GreenSPrintf("\t2、createdir 用于对指定dir目录创建带有统一前缀的目录\t%s", `.\rul.exe createdir -p "chapter" -d "./" -t 10`)
 		return
 	},
 }
